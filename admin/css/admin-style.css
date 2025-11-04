@@ -1,0 +1,115 @@
+/**
+ * 管理画面スタイル
+ *
+ * @package WP_Slug_Translator
+ */
+
+.wst-admin-content {
+	margin-top: 20px;
+}
+
+.wst-admin-content .form-table {
+	margin-top: 20px;
+}
+
+.wst-admin-content .form-table th {
+	width: 200px;
+}
+
+.wst-test-container,
+.wst-logs-container {
+	margin-top: 20px;
+}
+
+.wst-test-result-container {
+	margin-top: 30px;
+	padding: 20px;
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	border-radius: 4px;
+}
+
+.wst-test-result-container h3 {
+	margin-top: 0;
+}
+
+.wst-test-result-container table {
+	margin-top: 15px;
+}
+
+.wst-test-result-container table th {
+	width: 150px;
+	font-weight: 600;
+}
+
+.wst-status {
+	padding: 3px 8px;
+	border-radius: 3px;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.wst-status.success {
+	background: #d4edda;
+	color: #155724;
+}
+
+.wst-status.error {
+	background: #f8d7da;
+	color: #721c24;
+}
+
+.wst-error-message {
+	color: #dc3545;
+	font-size: 12px;
+}
+
+.wst-logs-header {
+	margin-bottom: 15px;
+}
+
+.wst-logs-header p {
+	margin: 0;
+}
+
+.wst-logs-container table {
+	margin-top: 15px;
+}
+
+.wst-logs-container table th {
+	font-weight: 600;
+}
+
+.wst-api-key-row,
+.wst-model-row,
+.wst-test-row {
+	display: none;
+}
+
+.wst-api-key-row.active,
+.wst-model-row.active,
+.wst-test-row.active {
+	display: table-row;
+}
+
+.wst-test-result {
+	margin-left: 10px;
+}
+
+.wst-test-result.success {
+	color: #155724;
+}
+
+.wst-test-result.error {
+	color: #721c24;
+}
+
+.wst-test-result.loading {
+	color: #0073aa;
+}
+
+.code {
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 13px;
+}
+
