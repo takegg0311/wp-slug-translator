@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: WordPress Slug Translator
- * Plugin URI: https://github.com/your-username/wp-slug-translator
+ * Plugin URI: https://github.com/takegg0311/wp-slug-translator
  * Description: ページ/投稿のタイトルから英数字のスラッグを自動生成し、大規模言語モデルAPIで翻訳するプラグイン
  * Version: 1.0.0
- * Author: Your Name
- * Author URI: https://your-website.com
+ * Author: takegg0311
+ * Author URI: https://github.com/takegg0311
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: wp-slug-translator
