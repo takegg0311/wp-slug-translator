@@ -83,7 +83,7 @@ $api_settings = get_option( 'wst_api_settings', array() );
 						placeholder="モデル名を入力してください"
 					/>
 					<p class="description">
-						OpenAI: gpt-4o-mini, Gemini: gemini-1.5-flash, Claude: claude-3-5-sonnet-latest
+						OpenAI: gpt-4o-mini, Gemini: gemini-2.5-flash-lite, Claude: claude-haiku-4-5
 					</p>
 				</td>
 			</tr>

@@ -233,7 +233,7 @@ class WST_API_Handler {
 	 */
 	private function call_gemini_api( $api_config, $prompt ) {
 		$api_key = $api_config['api_key'];
-		$model   = $api_config['model'] ?? 'gemini-1.5-flash';
+		$model   = $api_config['model'] ?? 'gemini-2.5-flash-lite';
 
 		$url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$api_key}";
 
@@ -310,7 +310,7 @@ class WST_API_Handler {
 	 */
 	private function call_claude_api( $api_config, $prompt ) {
 		$api_key = $api_config['api_key'];
-		$model   = $api_config['model'] ?? 'claude-3-5-sonnet-latest';
+		$model   = $api_config['model'] ?? 'claude-haiku-4-5';
 
 		$url = 'https://api.anthropic.com/v1/messages';
 
@@ -476,8 +476,8 @@ class WST_API_Handler {
 	public function get_default_model( $provider ) {
 		$defaults = array(
 			'openai' => 'gpt-4o-mini',
-			'gemini' => 'gemini-1.5-flash',
-			'claude' => 'claude-3-5-sonnet-latest',
+			'gemini' => 'gemini-2.5-flash-lite',
+			'claude' => 'claude-haiku-4-5',
 		);
 
 		return $defaults[ $provider ] ?? '';

@@ -18,8 +18,8 @@
 ### 2. 対応API
 以下のAPIに対応し、フォールバック機能を実装:
 1. OpenAI API (gpt-4o-mini を推奨)
-2. Google Gemini API (gemini-1.5-flash を推奨)
-3. Anthropic Claude API (claude-3-5-sonnet-latest を推奨)
+2. Google Gemini API (gemini-2.5-flash-lite を推奨)
+3. Anthropic Claude API (claude-haiku-4-5 を推奨)
 
 - 最大3つのAPIを優先順位付きで設定可能
 - 1つ目が失敗したら2つ目、2つ目が失敗したら3つ目を自動実行
