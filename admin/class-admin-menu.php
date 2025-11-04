@@ -142,12 +142,40 @@ class WST_Admin_Menu {
 			wp_send_json_error( array( 'message' => '権限がありません' ) );
 		}
 
+		$priority = isset( $_POST['priority'] ) ? absint( $_POST['priority'] ) : 0;
 		$provider = isset( $_POST['provider'] ) ? sanitize_text_field( $_POST['provider'] ) : '';
 		$api_key  = isset( $_POST['api_key'] ) ? sanitize_text_field( $_POST['api_key'] ) : '';
 		$model    = isset( $_POST['model'] ) ? sanitize_text_field( $_POST['model'] ) : '';
 
+		// 優先順位が指定されている場合は、保存されたAPIキーを使用
+		if ( $priority > 0 && $priority <= 3 ) {
+			$api_settings = get_option( 'wst_api_settings', array() );
+			$provider_key = "provider_{$priority}";
+			$api_key_key  = "api_key_{$priority}";
+			$model_key    = "model_{$priority}";
+
+			if ( ! empty( $api_settings[ $provider_key ] ) && ! empty( $api_settings[ $api_key_key ] ) ) {
+				$api_handler = new WST_API_Handler();
+				$decrypted_key = $api_handler->decrypt_api_key( $api_settings[ $api_key_key ] );
+				
+				if ( ! empty( $decrypted_key ) ) {
+					$provider = $api_settings[ $provider_key ];
+					$api_key  = $decrypted_key;
+					$model    = ! empty( $api_settings[ $model_key ] ) ? $api_settings[ $model_key ] : $api_handler->get_default_model( $provider );
+				} else {
+					wp_send_json_error( array( 'message' => 'APIキーの復号化に失敗しました。再度APIキーを入力して保存してください。' ) );
+					return;
+				}
+			} else {
+				wp_send_json_error( array( 'message' => 'APIキーが設定されていません' ) );
+				return;
+			}
+		}
+
+		// フォームから送信された値を直接使用する場合
 		if ( empty( $provider ) || empty( $api_key ) ) {
 			wp_send_json_error( array( 'message' => 'プロバイダーとAPIキーを入力してください' ) );
+			return;
 		}
 
 		$api_handler = new WST_API_Handler();

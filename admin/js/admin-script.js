@@ -41,20 +41,17 @@
 				return;
 			}
 
-			if (!apiKey) {
-				alert('APIキーを入力してください');
-				return;
-			}
-
 			var $result = $('.wst-test-result[data-priority="' + priority + '"]');
 			$result.html('<span class="loading">テスト中...</span>');
 
+			// 保存されたAPIキーを使用してテスト（フォームの値は参考情報として送信）
 			$.ajax({
 				url: wstAdmin.ajaxUrl,
 				type: 'POST',
 				data: {
 					action: 'wst_test_api_connection',
 					nonce: wstAdmin.nonce,
+					priority: priority,
 					provider: provider,
 					api_key: apiKey,
 					model: model

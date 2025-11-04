@@ -111,11 +111,17 @@ class WST_API_Handler {
 			$model_key    = "model_{$priority}";
 
 			if ( ! empty( $this->api_settings[ $provider_key ] ) && ! empty( $this->api_settings[ $api_key_key ] ) ) {
-				$apis[] = array(
-					'provider' => $this->api_settings[ $provider_key ],
-					'api_key'  => $this->decrypt_api_key( $this->api_settings[ $api_key_key ] ),
-					'model'    => $this->api_settings[ $model_key ] ?? $this->get_default_model( $this->api_settings[ $provider_key ] ),
-				);
+				$decrypted_key = $this->decrypt_api_key( $this->api_settings[ $api_key_key ] );
+				
+				// 復号化されたAPIキーが空でないことを確認
+				// 空の場合は復号化に失敗した可能性がある
+				if ( ! empty( $decrypted_key ) ) {
+					$apis[] = array(
+						'provider' => $this->api_settings[ $provider_key ],
+						'api_key'  => $decrypted_key,
+						'model'    => $this->api_settings[ $model_key ] ?? $this->get_default_model( $this->api_settings[ $provider_key ] ),
+					);
+				}
 			}
 		}
 
@@ -419,13 +425,18 @@ class WST_API_Handler {
 		}
 
 		$key = wp_salt( 'auth' );
+		
+		// base64デコードを試行
 		$decoded = base64_decode( $encrypted_api_key, true );
 		if ( $decoded === false ) {
+			// base64デコードに失敗した場合、プレーンテキストの可能性
+			// または既に復号化済みの可能性がある
 			return '';
 		}
 
 		$parts = explode( '|', $decoded );
 		if ( count( $parts ) !== 2 ) {
+			// フォーマットが異なる場合は復号化失敗
 			return '';
 		}
 
@@ -433,11 +444,18 @@ class WST_API_Handler {
 		$hash = $parts[1];
 
 		// ハッシュ検証
-		if ( hash_hmac( 'sha256', $data, $key ) !== $hash ) {
+		$expected_hash = hash_hmac( 'sha256', $data, $key );
+		if ( ! hash_equals( $expected_hash, $hash ) ) {
+			// ハッシュ検証失敗（タイミング攻撃対策でhash_equalsを使用）
 			return '';
 		}
 
-		return base64_decode( $data, true );
+		$decrypted = base64_decode( $data, true );
+		if ( $decrypted === false ) {
+			return '';
+		}
+
+		return $decrypted;
 	}
 
 	/**
