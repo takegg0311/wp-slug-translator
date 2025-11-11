@@ -133,7 +133,18 @@ class WST_Translator {
 			return;
 		}
 
+		// 下書きステータスの場合はスキップ
+		$post_status = get_post_status( $post_id );
+		if ( 'auto-draft' === $post_status ) {
+			return;
+		}
+
 		$current_slug = get_post_field( 'post_name', $post_id );
+
+		// スラッグが"auto-draft"で始まる場合はスキップ
+		if ( ! empty( $current_slug ) && strpos( $current_slug, 'auto-draft' ) === 0 ) {
+			return;
+		}
 
 		// ケース1: スラッグが空の場合
 		if ( empty( $current_slug ) ) {
